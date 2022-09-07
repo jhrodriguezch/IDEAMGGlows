@@ -30,8 +30,8 @@ def changeGGLOWSColNames(df):
     return df
 
 
-def extractForecastEnsembles(comid):
-    return changeGGLOWSColNames(ggs.streamflow.forecast_ensembles(comid))
+def extractForecastEnsembles(comid, dateInit):
+    return changeGGLOWSColNames(ggs.streamflow.forecast_ensembles(comid, forecast_date=dateInit))
 
 
 def extractForecastRecords(comid):
@@ -148,3 +148,6 @@ def readXMLCurvasGasto(dirFile, strToSplitDf="CÓDIGO",
         df_res[dateCol] = pd.to_datetime(df_res[dateCol], format=formatDate)
     
     return df_res
+
+def getBiasCorrectValue(values, sim, obs):
+    return changeGGLOWSColNames(ggs.bias.correct_forecast(values, sim, obs))

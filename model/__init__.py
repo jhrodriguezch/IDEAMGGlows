@@ -80,10 +80,18 @@ class ModelRoutine:
         self.curvasGastoPath = os.path.join(__path__[0],
                                             self.staticDataBase["CURVASGASTO"]["FOLDER"])
 
+        self.caudalStaticPath = os.path.join(__path__[0],
+                                             self.staticDataBase["IDEAMDATABASE"]["FOLDER_D"])
+
+        self.nivelStaticPath  = os.path.join(__path__[0],
+                                             self.staticDataBase["IDEAMDATABASE"]["FOLDE_WL"])
+
         # Assert existence of the folder
         assert os.path.exists(self.catchmentPath)       , "{} does not exist.".format(self.catchmentPath)
         assert os.path.exists(self.catchmentPath)       , "{} does not exist.".format(self.catchmentPath)
         assert len(os.listdir(self.curvasGastoPath)) > 0, "Does not files in {} directory.".format(self.curvasGastoPath)
+        assert os.path.exists(self.caudalStaticPath) , "Does not exist {0} path.".format(self.caudalStaticPath)
+        assert os.path.exists(self.nivelStaticPath) , "Does not exist {0} path.".format(self.nivelStaticPath)
 
     # Get Function static data
     def getCatchmentGDF(self):
@@ -93,8 +101,9 @@ class ModelRoutine:
     def getCrossSectionDataBase(self):
         return self.crossSectionDb
 
+
     # Get function dynamic data
-    def getStreamFlowsSimulatedEnsemble(self, comid: int):
+    def getStreamFlowsSimulatedEnsemble(self, comid: int, dateInit: str):
         '''
         var  :
              - comid : int -> reach chanel id
@@ -117,7 +126,7 @@ class ModelRoutine:
         
         '''
         assert type(comid) == int, "comid should be integer"
-        return extractForecastEnsembles(comid)
+        return extractForecastEnsembles(comid, dateInit)
 
     
     def getStreamFlowsSimulatedRecords(self, comid: int):
@@ -167,7 +176,9 @@ class ModelRoutine:
             //////////////////////////////////////////////////////////////////////////
         '''
         assert type(comid) == int, "comid should be integer"
-        return extractHistoricSimulation(comid)
+        rv = extractHistoricSimulation(comid)
+        self.extractHistoricSimulationDF = rv
+        return rv
 
     
     def getStreamFlowsSimulatedDayAvg(self, comid: int):
@@ -259,18 +270,35 @@ class ModelRoutine:
         url_dir = self.staticDataBase['FEWS']['URL'] + '/json' + typeData + '/'
         stationFile = '00' + stationID + typeData + 'obs.json'
         
-        # Extrac data
-        # try:
-        #     response = urlopen(url_dir + stationFile)
-        #     response = json.loads(response.read())
-        # except:
-        #     print('URLError: {} does not exist.'.format(url_dir + stationFile))
-        #     sys.exit()
         # TODO: Add conditional id station id does not exist
         return jfews2df(url_dir + stationFile)
 
     
-    def getDailyAverageDataHist(self, stationID, typeData: str):
+    def getDailyAverageDataHist_static(self, stationID, typeData: str):
+        """
+        """
+        assert type(stationID) == str, 'StationID should be a string format (str).'
+        assert type(typeData) == str, 'typeData should be a string format (str).'
+        assert typeData.upper() in ["H", "Q"], 'typeData only should be H or Q, not {}'.format(typeData)
+
+        # Select folder of the data
+        if typeData.upper() == 'Q':
+            typeDataURL = 'Discharge_Data/'
+
+            # Build url direction
+            staticDir = os.path.join(self.staticDataBase["IDEAMDATABASE"]["FOLDER_D"], stationID + '.csv')
+            print(staticDir)
+
+        elif typeData.upper() == 'H':
+            # typeDataURL = 'Water_Level_Data/'
+            # Build url direction
+            staticDir = os.path.join(self.staticDataBase["IDEAMDATABASE"]["FOLDER_WL"], stationID + '.csv')
+            print(staticDir)
+
+        return 0
+
+
+    def getDailyAverageDataHist_hs(self, stationID, typeData: str):
         '''
         obj  : Obtain data for hydroshare web server
         var:
@@ -312,21 +340,19 @@ class ModelRoutine:
 
             # Build url direction
             urlDir = self.staticDataBase['HYDROSHARE']['URL_D'] + typeDataURL + stationID + '.csv'
-        elif typeData.upper() == 'H':
-            typeDataURL = 'Water_Level_Data/'
+            staticDir = os.path.join(self.staticDataBase["IDEAMDATABASE"]["FOLDER_D"], stationID + '.csv')
 
+        elif typeData.upper() == 'H':
+            # typeDataURL = 'Water_Level_Data/'
             # Build url direction
             urlDir = self.staticDataBase['HYDROSHARE']['URL_WL'] + stationID + '.csv'
+            staticDir = os.path.join(self.staticDataBase["IDEAMDATABASE"]["FOLDER_WL"], stationID + '.csv')
 
-        # Extract data
-        # try:
-        #     response = requests.get(urlDir, verify=True).content
-        # except:
-        #     print('URLError: {} does not exist.'.format(urlDir))
-        #     sys.exit()
-        # TODO: Add conditional id station id does not exist
-        # TODO: Add actual data (2020 - actual)
-        return hydroShare2df(urlDir)
+        # Extract data from hydroShare
+        rv = hydroShare2df(urlDir)
+        
+        self.getDailyAverageDataHistDf = rv
+        return rv
 
     
     def getCurvaDeGasto(self, stationID):
@@ -371,11 +397,11 @@ class ModelRoutine:
             Elapsed time in 50 run test = 0.00045877456665039063 seconds
             //////////////////////////////////////////////////////////////////////////
         26 AGO
-        //////////////////////////////////////////////////////////////////////////
-        Test 1
-        Test for function : getSeccionesTransversales
-        Elapsed time in 50 run test = 0.0004388427734375 seconds
-        //////////////////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////////////
+            Test 1
+            Test for function : getSeccionesTransversales
+            Elapsed time in 50 run test = 0.0004388427734375 seconds
+            //////////////////////////////////////////////////////////////////////////
         '''
         assert type(stationID) == str, 'StationID should be a string format (str).'
         assert len(self.crossSectionDb['CODIGO'].unique()) > 0, "Review data base of the cross sections."
@@ -385,4 +411,28 @@ class ModelRoutine:
         else:
             warnings.warn("Warning: Cross Section does not exist for the station {}.".format(stationID))
             return 99
+
+
+    def getBiasCorrectData(self, input, simData, obsData):
+        """
+        var: 
+            input : pandas.DataFrame   -> DataFrame with values to fix
+            simData : pandas.DataFrame -> DataFrame with historical simulation data
+            obsData : pandas.DataFrame -> DataFrame with historical Observation data
+        return: 
+            rv : pandas.DataFrame -> Data frame with values fixed
+        Test 1:
+            31 - AGU - 2022
+            //////////////////////////////////////////////////////////////////////////
+            Test 1
+            Test for function : getBiasCorrectData
+            Elapsed time in 50 run test = 0.006322207450866699 seconds
+            ////////////////////////////////////////////////////////////////////////// 
+        """
+        if type(input) != type(pd.DataFrame()): 
+            warnings.warn('Pandas library does not define a pandas.Serie as dtype Series.object in the 1.4.3 version.')
+            input = input.to_frame()
+
+        return getBiasCorrectValue(input, simData, obsData)
+
 
