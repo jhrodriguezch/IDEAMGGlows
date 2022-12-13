@@ -32,7 +32,7 @@ lon_creach = []
 
 error_txt = ['\nError al identificar los COMID de las estaciones.\n']
 
-dir_station_data = r'D:\IDEAM\0_ejecucion\7.Datos\csv\comit_from_catchment.csv'
+dir_station_data = r'D:\IDEAM\0_ejecucion\7.Datos\csv\comit_from_catchment_V1.csv'
 df_station = pd.read_csv(dir_station_data)
 
 # df_station = df_station.head(5)
@@ -42,7 +42,7 @@ for _, station in df_station.iterrows():
         lat_tmp, lon_tmp = ggs.streamflow.reach_to_latlon(station['COMID'])
         lat_creach.append(lat_tmp)
         lon_creach.append(lon_tmp)
-        dist_list.append(calc_distance(station['latitud'], station['longitud'], lat_tmp, lon_tmp))
+        dist_list.append(calc_distance(station['lat'], station['lng'], lat_tmp, lon_tmp))
     else:
         error_txt.append('Error en la estacion {0}.'.format(station['nombre']))
         lat_creach.append(np.nan)
@@ -56,18 +56,18 @@ df_station['lat_cent_reach'] = lat_creach
 df_station['lon_cent_reach'] = lon_creach
 df_station['dist_reach']     = dist_list
 
-df_station.to_csv(r'D:\IDEAM\0_ejecucion\7.Datos\csv\comit_from_catchment_dis.csv')
-df_station.to_json(r'D:\IDEAM\0_ejecucion\7.Datos\csv\comit_from_catchment_dis.json', orient='index')
+df_station.to_csv(r'D:\IDEAM\0_ejecucion\7.Datos\csv\comit_from_catchment_V1_dis.csv')
+df_station.to_json(r'D:\IDEAM\0_ejecucion\7.Datos\csv\comit_from_catchment_V1_dis.json', orient='index')
 
-error_txt.append('Archivo final: D:/IDEAM/0_ejecucion/7.Datos/csv/comit_from_catchment_dis.csv')
-error_txt.append('Archivo final: D:/IDEAM/0_ejecucion/7.Datos/csv/comit_from_catchment_dis.json')
+error_txt.append('Archivo final: D:/IDEAM/0_ejecucion/7.Datos/csv/comit_from_catchment_V1_dis.csv')
+error_txt.append('Archivo final: D:/IDEAM/0_ejecucion/7.Datos/csv/comit_from_catchment_V1_dis.json')
 error_txt.append('Notas:')
 error_txt.append(' - Distancia en km')
 error_txt.append(' - COMID obtenidos de los catchments.')
 error_txt.append('Fecha : {0}'.format(datetime.now()))
 error_txt.append('')
 
-with open(r'D:\IDEAM\0_ejecucion\7.Datos\csv\error.txt', 'w') as fp:
+with open(r'D:\IDEAM\0_ejecucion\7.Datos\csv\error_v1.txt', 'w') as fp:
     for item in error_txt:
         fp.write("%s\n" % item)
     print('Done!')
