@@ -54,6 +54,6 @@ Organizacion del proyecto
         ├── ...             <- Archivos de la documentación
     ├── examples            <- Jupyter notebooks con ejemplos de la API
         ├── ...             <- Folder con archivos para ejecutar el ejemplo.
-    ├── pyorc               <- Libreria
+    ├── pyla                <- Libreria
         ├── ...             <- Funciones de la API
 
