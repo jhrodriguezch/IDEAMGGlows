@@ -91,7 +91,7 @@ Notas:
 	continuación, se presenta la gráfica asociada a esta comparación visual para
 	la estación 44037040.
 	
-	![Ejemplo comparación visual](./pyla/test/imgs/img_comparation_sim_obs_consecutive_days.png)
+![Ejemplo comparación visual](./pyla/test/imgs/img_comparation_sim_obs_consecutive_days.png)
 	
 	Para la comparación matemática, al ejecutar el archivo test.py, en la 
 	terminal se presentan los datos obtenidos de la plataforma FEWS y las 
@@ -115,5 +115,5 @@ Notas:
 	Estos resultados se muestran de manera similar a los presentados en la 
 	gráfica a continuación:
 	
-	![Ejemplo matrices de confusión](./pyla/test/imgs/img_terminal_confusionmatrix_plot.png)
+![Ejemplo matrices de confusión](./pyla/test/imgs/img_terminal_confusionmatrix_plot.png)
 	
