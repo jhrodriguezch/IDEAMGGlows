@@ -12,6 +12,14 @@ Referencias:
  * [Centro Internacional de Agricultura Tropical](https://ciat.cgiar.org/?lang=es)
  * [Servir-Amazonia](https://servir.ciat.cgiar.org/?lang=es)
 
+## Tabla de contenido
+1. [Objetivo](#objetivo)
+2. [Lista de tareas](#lista-de-tareas)
+3. [Instalación](#instalación)
+3. [Uso de la herramienta](#uso-de-la-herramienta)
+4. [Licencia](#licencia)
+5. [Organización del proyecto](#organización-del-proyecto)
+6. [Histórico](#histórico)
 
 ## Objetivo
 A partir de los datos observados de los niveles del agua en los diferentes ríos
@@ -23,27 +31,30 @@ navegabilidad de los principales cauces del país.
 
 
 ### Lista de tareas
-- [x] Crear repositorio
-- [ ] Automatizar deascarga/lectura de la información secundaria (series de niveles,
+- [ ] Definir nombre. 
+- [x] Crear repositorio.
+- [x] Automatizar deascarga/lectura de la información secundaria (series de niveles,
 	  pronostico de niveles, perfiles de río, etc.).
-- [ ] Implementar metodologia de (Sanches Lozano, 2021)
+- [x] Implementar metodologia de (Sanches Lozano, 2021).
 - [ ] Análizar resultados obtenidos.
 - [ ] Plantear ejemplo de la herramienta.
-- [ ] Dar por finalizada la herramienta.
+- [ ] Comentar las funciones desarrolladas.
+- [ ] Revisar ortografía y de estilo.
+- [ ] Finalizar la herramienta.
 
-Instalación
------------
+## Instalación
+-------------
 En desarrollo.
 
-Uso de la herramienta
+## Uso de la herramienta
 ---------------------
 En desarrollo.
 
-Licencia
+## Licencia
 --------
 En desarrollo.
 
-Organizacion del proyecto
+## Organización del proyecto
 -------------------------
     .
     ├── README.md
@@ -57,3 +68,52 @@ Organizacion del proyecto
     ├── pyla                <- Libreria
         ├── ...             <- Funciones de la API
 
+## Histórico
+---------
+### Fecha: 19/12/2022
+
+Actualización de las funciones presentadas a continuación:
+	- geoson_data 		  : Objetivo - Análisis de archivos geojson.
+	- hist_data           : Objetivo - Manejo de información observada.
+	- sim_data            : Objetivo - Manejo de información simulada.
+	- timeseries_analysis : Objetivo - Análisis de las series de tiempo
+Actualización test.py como primer acercamiento al ejemplo de la herramienta.
+Actualización __init__.py como archivo main de la herramienta.
+Actualización const.py como variables constantes de la herramienta.
+
+Notas:
+
+	Al ejecutar el archivo test.py se obtienen los resultados de la comparación
+	entre los datos simulados y los datos observados para una estación 
+	determinada, comparando visualmente las cantidades obtenidas, los cambios
+	dados en las cantidades, los días consecutivos en que presentó ascenso de los
+	niveles y los días consecutivos que presentaron descensos de los niveles. A 
+	continuación, se presenta la gráfica asociada a esta comparación visual para
+	la estación 44037040.
+	
+	![Ejemplo comparación visual](./pyla/test/imgs/img_comparation_sim_obs_consecutive_days.png)
+	
+	Para la comparación matemática, al ejecutar el archivo test.py, en la 
+	terminal se presentan los datos obtenidos de la plataforma FEWS y las 
+	matrices de confusión de los datos simulados y observados. Teniendo en 
+	cuenta los siguientes casos:
+	
+	- Comparación entre las alertas generadas por la serie histórica observada y
+	el nivel mínimo reportado en FEWS, y las alertas generadas por la serie 
+	histórica simulada corregida y el nivel mínimo producido por el periodo de 
+	retorno asociado al nivel mínimo reportado en FEWS.
+	
+	- Comparación entre la serie histórica observada y la serie simulada, siendo
+	los valores 1 si el valor en una fecha determinada es mayor al valor del día
+	inmediatamente anterior o -1 si el valor en una fecha determinada es 
+	menor al valor del día inmediatamente anterior.
+	
+	- Comparación entre la serie histórica observada y la serie simulada, siendo
+	los valores el número de días consecutivos que se presentó un acenso (en el 
+	primer caso) o un descenso (en el segundo caso.).
+	
+	Estos resultados se muestran de manera similar a los presentados en la 
+	gráfica a continuación:
+	
+	![Ejemplo matrices de confusión](./pyla/test/imgs/img_terminal_confusionmatrix_plot.png)
+	
