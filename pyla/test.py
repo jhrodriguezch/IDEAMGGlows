@@ -25,7 +25,9 @@ comid, _                     = pyla.get_comit_from_station(ID = codigo_estacion)
 serie_hist_observada, _      = pyla.get_historical_data(codigo_estacion)
 serie_hist_simulada, _       = pyla.get_historical_sim_data(comid, serie_hist_observada)
 nivel_de_alerta_bajos_obs, _ = pyla.get_alerta_minima_fews(codigo_estacion)
+perfil_del_rio, _            = pyla.get_perfil_del_rio(estacion = codigo_estacion)
 
+'''
 # Fix units
 # ---------
 nivel_de_alerta_bajos_obs    = nivel_de_alerta_bajos_obs * 100
@@ -317,3 +319,4 @@ ax[2, 0].grid()
 ax[3, 0].grid()
 
 plt.show()
+'''

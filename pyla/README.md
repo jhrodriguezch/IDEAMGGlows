@@ -59,14 +59,20 @@ En desarrollo.
     .
     ├── README.md
     ├── LICENSE
-    ├── setup.py            <- setup script compatible con pip
-    ├── environment.yml     <- YML-file para configurar el conda environment
-    ├── docs                <- Documentación
-        ├── ...             <- Archivos de la documentación
-    ├── examples            <- Jupyter notebooks con ejemplos de la API
-        ├── ...             <- Folder con archivos para ejecutar el ejemplo.
-    ├── pyla                <- Libreria
-        ├── ...             <- Funciones de la API
+    ├── setup.py        <- setup script compatible con pip
+    ├── environment.yml <- YML-file para configurar el conda environment
+	|── request.txt     <- request-file para configurar el ambiente
+    ├── docs            <- Documentación
+		├── imgs                   <- Imagenes
+        ├── ...         	       <- Archivos de la documentación
+    ├── examples        <- Jupyter notebooks con ejemplos de la API
+        ├── ...         	       <- Folder con archivos para ejecutar el ejemplo.
+    ├── pyla            <- Libreria/herramienta
+        ├── ...         	       <- Funciones de la API
+	├── static          <- Bases de datos
+		├── profiles_db.json       <- Base de datos de secciones transversales del ríos.
+		├── IDEAM_Stations_v2.json <- Base de datos de las estaciones usadas.
+		├── ...                    <- Otras bases de datos
 
 ## Histórico
 ---------
@@ -91,7 +97,7 @@ Notas:
 	continuación, se presenta la gráfica asociada a esta comparación visual para
 	la estación 44037040.
 	
-![Ejemplo comparación visual](./pyla/test/imgs/img_comparation_sim_obs_consecutive_days.png)
+![Ejemplo comparación visual](./docs/imgs/img_comparation_sim_obs_consecutive_days.png)
 	
 	Para la comparación matemática, al ejecutar el archivo test.py, en la 
 	terminal se presentan los datos obtenidos de la plataforma FEWS y las 
@@ -115,5 +121,17 @@ Notas:
 	Estos resultados se muestran de manera similar a los presentados en la 
 	gráfica a continuación:
 	
-![Ejemplo matrices de confusión](./pyla/test/imgs/img_terminal_confusionmatrix_plot.png)
+![Ejemplo matrices de confusión](./docs/imgs/img_terminal_confusionmatrix_plot.png)
 	
+### Fecha: 22/12/2022
+
+Actualización:
+Actualizacion bases de datos:
+	- Añadida las ubicaciones de las estaciones. IDEAM_Stations_v2.json
+	- Añadida las secciones transversales - profiles_db.json
+Actualización a las funciones 
+	- __init__.py     : Update -> Nuevas funciones añadidas
+	- const.py        : Update -> Localizaciones actualizadas
+	- geojson_data.py : New    -> Lectura de la tabla de files tipo geojson.
+	- profile_data.py : New    -> Lectura de la base de datos de las secciones transversales.
+	- test.py         : Update -> Incluye el uso de la lectura de las secciones transversales.

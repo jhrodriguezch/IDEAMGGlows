@@ -6,7 +6,9 @@ CONST = {'HYDROSHARE URL'              : r'https://www.hydroshare.org/resource/b
          'FEWS COLUMN NAME ESTACIONES' : 'id',
          'FEWS URL SERIES'             : 'http://fews.ideam.gov.co/colombia/jsonH',
          
-         'GEOJSON FILE'               : r'D:\IDEAM\0_ejecucion\7.Datos\station\historical_validation_tool\IDEAM_Stations_v2.json',
+         'GEOJSON FILE'               : r'.\static\IDEAM_Stations_v2.json',
          'GEOJSON COLUMNS TO EXTRACT' : ['new_COMID'],
+
+         'PROFILE DATABASE' : r'.\static\profiles_db.json',
          
          'UTC' : 5,}

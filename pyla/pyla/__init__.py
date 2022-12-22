@@ -6,12 +6,13 @@ from .model.hist_data import Historical_data, Fews_data
 from .model.sim_data import Historical_simulated_fixed_data
 from .model.geojson_data import Extract_data_from_json
 from .model.timeseries_analysis import Return_periode_and_serie_analysis
+from .model.profile_data import Exteact_river_profile
 
 import time
 import numpy as np
 
 
-# Extra functions
+# Decorators functions
 # ---------------
 def decorator_demora(fun):
     def f (*kwards, **args):
@@ -31,21 +32,30 @@ def decorator_demora(fun):
         return rv
     return f
 
+def decorator_print_demora(fun):
+    def f(*args, **kwards):
+        before = time.time()
+        rv = fun(*args, **kwards)
+        print(f'Function: {fun.__name__}(), Delay: {time.time()-before} seg.')
+        return rv
+    return f
 
 # Functions to download data
 # --------------------------
-def get_historical_data(*kwards, **args):
+@decorator_print_demora
+def get_historical_data(*args, **kwards):
     __time_test__ = '''
     Tiempo promedio de demora:
     9.567645192146301 s.
     Número de intentos: 10
     '''
     foo = Historical_data(const.CONST)
-    rv = foo(*kwards, **args)
+    rv = foo(*args, **kwards)
     return rv, foo
 
 
-def get_historical_sim_data(*kwards, **args):
+@decorator_print_demora
+def get_historical_sim_data(*args, **kwards):
     __time_test__ = '''
     Tiempo promedio de demora:
     8.141277694702149 s.
@@ -53,11 +63,12 @@ def get_historical_sim_data(*kwards, **args):
     Fecha: 13/12/2022
     '''
     foo = Historical_simulated_fixed_data(const.CONST)
-    rv = foo(*kwards, **args)
+    rv = foo(*args, **kwards)
     return rv, foo
 
 
-def get_comit_from_station(*kwards, **args):
+@decorator_print_demora
+def get_comit_from_station(*args, **kwards):
     __time_test__ = '''
     Tiempo promedio de demora:
     0.5479104804992676 s.
@@ -65,19 +76,20 @@ def get_comit_from_station(*kwards, **args):
     '''
     foo = Extract_data_from_json(path_dir=const.CONST['GEOJSON FILE'])
     foo.set_column_to_extract(columns=const.CONST['GEOJSON COLUMNS TO EXTRACT'])
-    rv = foo(*kwards, **args)
+    rv = foo(*args, **kwards)
     rv = str(rv[const.CONST['GEOJSON COLUMNS TO EXTRACT']].values[0][0])
     return rv, foo
 
 
-def get_alerta_minima_fews(*kwards, **args):
+@decorator_print_demora
+def get_alerta_minima_fews(*args, **kwards):
     __time_test__ = '''
     Tiempo promedio de demora:
     0.08685457944869995 s.
     Número de intentos: 100
     '''
     foo = Fews_data(const.CONST)
-    rv = foo.get_station_information(*kwards, **args)
+    rv = foo.get_station_information(*args, **kwards)
     try:
         rv = rv['ubajos'][0]
     except:
@@ -85,16 +97,30 @@ def get_alerta_minima_fews(*kwards, **args):
     return rv , foo
 
 
+@decorator_print_demora
+def get_perfil_del_rio(*args, **kwards):
+    __time_test__ = '''
+    Tiempo promedio de demora:
+    Nombre de la función : get_perfil_del_rio
+    0.025811243057250976 s.
+    Número de intentos: 100
+    '''
+    foo = Exteact_river_profile(const.CONST)
+    rv = foo(*args, **kwards)
+    return rv, foo
+
+
 # Funtions to analysis
 # --------------------
-def get_data_from_return_period(*kwards, **args):
+@decorator_print_demora
+def get_data_from_return_period(*args, **kwards):
     __time_test__ = '''
     Tiempo promedio de demora:
     0.0017555880546569825 s.
     Número de intentos: 100
     '''
-    rp = args['rp']
-    time_serie = args['time_serie']
+    rp = kwards['rp']
+    time_serie = kwards['time_serie']
 
     foo = Return_periode_and_serie_analysis()
     foo.set_time_serie(time_serie=time_serie)
@@ -102,15 +128,16 @@ def get_data_from_return_period(*kwards, **args):
     return rv, foo
 
 
-def get_return_period_from_data(*kwards, **args):
+@decorator_print_demora
+def get_return_period_from_data(*args, **kwards):
     __time_test__ = '''
     Tiempo promedio de demora:
     Nombre de la función : get_return_period_from_data
     0.00174560546875 s.
     Número de intentos: 100
     '''
-    data       = args['data']
-    time_serie = args['time_serie']
+    data       = kwards['data']
+    time_serie = kwards['time_serie']
 
     foo = Return_periode_and_serie_analysis()
     foo.set_time_serie(time_serie=time_serie)

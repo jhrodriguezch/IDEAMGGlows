@@ -1,4 +1,5 @@
 import json
+import numpy as np
 import pandas as pd
 
 
@@ -21,7 +22,9 @@ class Extract_data_from_json:
         self.set_value_to_srch(val = kwards[self.name_col_srch])
         
         # Return
-        rv = self.json_file.loc[self.json_file[self.name_col_srch] == self.value_to_srch, [self.name_col_srch] +self.columns_to_extract].copy()
+        # rv = self.json_file.loc[self.json_file[self.name_col_srch] == self.value_to_srch, [self.name_col_srch] +self.columns_to_extract].copy()
+        tmp_columns = np.unique([*[self.name_col_srch], *self.columns_to_extract]).tolist()
+        rv = self.json_file.loc[self.json_file[self.name_col_srch] == self.value_to_srch, tmp_columns].copy()
         rv.reset_index(inplace = True, drop=True)
         self.result = rv
         return rv
