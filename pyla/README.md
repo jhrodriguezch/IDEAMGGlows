@@ -64,11 +64,11 @@ En desarrollo.
 	|── request.txt     <- request-file para configurar el ambiente
     ├── docs            <- Documentación
 		├── imgs                   <- Imagenes
-        ├── ...         	       <- Archivos de la documentación
+        ├── ...                    <- Archivos de la documentación
     ├── examples        <- Jupyter notebooks con ejemplos de la API
-        ├── ...         	       <- Folder con archivos para ejecutar el ejemplo.
+        ├── ...                    <- Folder con archivos para ejecutar el ejemplo.
     ├── pyla            <- Libreria/herramienta
-        ├── ...         	       <- Funciones de la API
+        ├── ...                    <- Funciones de la API
 	├── static          <- Bases de datos
 		├── profiles_db.json       <- Base de datos de secciones transversales del ríos.
 		├── IDEAM_Stations_v2.json <- Base de datos de las estaciones usadas.
