@@ -4,7 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 codigo_estacion = '47017160'
-'''
+
 codigo_estacion = '47017150'
 
 codigo_estacion = '11117050'
@@ -15,7 +15,7 @@ codigo_estacion = '51027060'
 
 codigo_estacion = '36027050'
 codigo_estacion = '12017010'
-
+''' 
 codigo_estacion = '47017170'
 '''
 

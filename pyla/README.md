@@ -135,3 +135,33 @@ Actualización a las funciones
 	- geojson_data.py : New    -> Lectura de la tabla de files tipo geojson.
 	- profile_data.py : New    -> Lectura de la base de datos de las secciones transversales.
 	- test.py         : Update -> Incluye el uso de la lectura de las secciones transversales.
+
+### Fecha: 03/01/2023
+Actualización 
+	New! :
+	- Carpeta View.
+	- series_plor.py -> Nuevas funciones para comparación visual de los re
+						sultados.
+	Update! :
+	- __init__.py            -> Nuevas funciones añadidas
+	- timeseries_analysis.py -> Nuevas funciones añadidas
+
+Notas:
+
+	Para realizar la comparación visual de los valores mínimos observados y simulados se presentan dos diferentes tipos de se graficas, las graficas tipo scatter y las graficas time series. Las graficas tipo scatter se muestran en la parte izquierda de la imágen a continuación, mostrando en el eje x los valores observados y el eje y los valores simulados. De arriba hacia abajo se observa la comparación de los niveles minimos mensuales, seguido de la comparación de los niveles minimos mensuales multianuales y finalizando con los niveles mínimos anuales. A la derecha se observan las graficas tipo time series, con las mismas comparaciones explicadas previamente.
+
+![Ejemplo comparación visual](./docs/imgs/img_series_comparison_example.png)
+
+	Para graficar estos resultados se desarrollo un script que permite una sencilla reproducción de los resultados. El script se localiza en view/serie_plot.py, sin embargo, para su llamado se ultilizaran las siguientes rutinas:
+
+	1. Para la comparacion de los datos mínimos mensuales.
+		pyla.scatter_monthly_yearly_comparation()
+		pyla.serie_monthly_yearly_comparation()
+
+	2. Para la comparación de los datos minímos mensuales multianuales.
+		pyla.scatter_monthly_comparation()
+		pyla.serie_monthly_comparation()
+
+	3. Para la comparación de los mínimos anuales.
+		pyla.scatter_yearly_comparation()
+		pyla.serie_yearly_comparation()
