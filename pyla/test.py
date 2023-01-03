@@ -4,13 +4,13 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 codigo_estacion = '47017160'
-
+'''
 codigo_estacion = '47017150'
 
 codigo_estacion = '11117050'
 codigo_estacion = '37057020'
 codigo_estacion = '44037040'
-'''
+
 codigo_estacion = '51027060'
 
 codigo_estacion = '36027050'
@@ -24,8 +24,43 @@ codigo_estacion = '47017170'
 comid, _                     = pyla.get_comit_from_station(ID = codigo_estacion)
 serie_hist_observada, _      = pyla.get_historical_data(codigo_estacion)
 serie_hist_simulada, _       = pyla.get_historical_sim_data(comid, serie_hist_observada)
-nivel_de_alerta_bajos_obs, _ = pyla.get_alerta_minima_fews(codigo_estacion)
-perfil_del_rio, _            = pyla.get_perfil_del_rio(estacion = codigo_estacion)
+# nivel_de_alerta_bajos_obs, _ = pyla.get_alerta_minima_fews(codigo_estacion)
+# perfil_del_rio, _            = pyla.get_perfil_del_rio(estacion = codigo_estacion)
+
+
+
+# Review plot
+#------------
+fig, axs = plt.subplots(3, 2, figsize=(15, 15))
+fig.tight_layout(pad=5.0)
+_ = pyla.scatter_monthly_yearly_comparation(obs_serie = serie_hist_observada,
+                                            sim_serie = serie_hist_simulada,
+                                            ax        = axs[0, 0])
+_ = pyla.serie_monthly_yearly_comparation(obs_serie = serie_hist_observada,
+                                          sim_serie = serie_hist_simulada,
+                                          ax        = axs[0, 1])
+
+_ = pyla.scatter_monthly_comparation(obs_serie = serie_hist_observada,
+                                     sim_serie = serie_hist_simulada,
+                                     ax        = axs[1, 0])
+_ = pyla.serie_monthly_comparation(obs_serie = serie_hist_observada,
+                                   sim_serie = serie_hist_simulada,
+                                   ax        = axs[1, 1])
+
+_ = pyla.scatter_yearly_comparation(obs_serie = serie_hist_observada,
+                                    sim_serie = serie_hist_simulada,
+                                    ax        = axs[2, 0])
+_ = pyla.serie_yearly_comparation(obs_serie = serie_hist_observada,
+                                  sim_serie = serie_hist_simulada,
+                                  ax        = axs[2, 1])
+
+axs[0, 0].grid()
+axs[0, 1].grid()
+axs[1, 0].grid()
+axs[1, 1].grid()
+axs[2, 0].grid()
+axs[2, 1].grid()
+plt.show()
 
 '''
 # Fix units

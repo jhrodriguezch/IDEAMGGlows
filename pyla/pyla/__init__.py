@@ -8,6 +8,8 @@ from .model.geojson_data import Extract_data_from_json
 from .model.timeseries_analysis import Return_periode_and_serie_analysis
 from .model.profile_data import Exteact_river_profile
 
+from .view.serie_plot import Monthly_minimum_plot
+
 import time
 import numpy as np
 
@@ -144,3 +146,40 @@ def get_return_period_from_data(*args, **kwards):
     rv = foo.get_return_period_from_data(data=data)
     return rv, foo
 
+# Functions to plot
+#------------------
+def scatter_monthly_yearly_comparation(*args, **kwards):
+    foo = Monthly_minimum_plot(*args, **kwards)
+    foo()
+    foo.get_monthly_minimum_scatter('min_monthly_yearly')
+    return foo
+
+def serie_monthly_yearly_comparation(*args, **kwards):
+    foo = Monthly_minimum_plot(*args, **kwards)
+    foo()
+    foo.get_monthly_minimum_serie('min_monthly_yearly')
+    return foo
+
+def scatter_monthly_comparation(*args, **kwards):
+    foo = Monthly_minimum_plot(*args, **kwards)
+    foo()
+    foo.get_monthly_minimum_scatter('min_monthly')
+    return foo
+
+def serie_monthly_comparation(*args, **kwards):
+    foo = Monthly_minimum_plot(*args, **kwards)
+    foo()
+    foo.get_monthly_minimum_serie('min_monthly')
+    return foo
+
+def scatter_yearly_comparation(*args, **kwards):
+    foo = Monthly_minimum_plot(*args, **kwards)
+    foo()
+    foo.get_monthly_minimum_scatter('min_yearly')
+    return foo
+
+def serie_yearly_comparation(*args, **kwards):
+    foo = Monthly_minimum_plot(*args, **kwards)
+    foo()
+    foo.get_monthly_minimum_serie('min_yearly')
+    return foo

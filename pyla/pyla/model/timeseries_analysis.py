@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 from scipy import stats
 from sklearn.metrics import mean_squared_error
 
@@ -164,3 +165,56 @@ class Return_periode_and_serie_analysis:
         tmp_max = tmp_rp.data.max()
         tmp_rp['data'] = -1 * (tmp_rp['data'] - tmp_max)
         return tmp_rp, tmp_max
+
+
+# Auxiliar functions
+def min_monthly_yearly(time_serie):
+    time_serie['year']  = time_serie.index.year
+    time_serie['month'] = time_serie.index.month
+    time_serie['day']   = 1
+
+    rv = time_serie.groupby([time_serie.index.year, time_serie.index.month]).min()
+    rv.reset_index(inplace=True, drop=True)
+
+    rv.index = pd.to_datetime({'year'  : rv['year'],
+                                'month' : rv['month'],
+                                'day'   : rv['day']})
+    rv.index.name = 'date'
+
+    rv.drop(['year', 'month', 'day'], axis=1, inplace=True)
+
+    return rv
+
+def min_monthly(time_serie):
+    time_serie['year']  = 2022
+    time_serie['month'] = time_serie.index.month
+    time_serie['day']   = 1
+
+    rv = time_serie.groupby([time_serie.index.month]).min()
+    rv.reset_index(inplace=True, drop=True)
+
+    rv.index = pd.to_datetime({'year'  : rv['year'],
+                               'month' : rv['month'],
+                               'day'   : rv['day']})
+    rv.index.name = 'date'
+
+    rv.drop(['year', 'month', 'day'], axis=1, inplace=True)
+
+    return rv
+
+def min_yearly(time_serie):
+    time_serie['year']  = time_serie.index.year
+    time_serie['month'] = 1
+    time_serie['day']   = 1
+
+    rv = time_serie.groupby([time_serie.index.year]).min()
+    rv.reset_index(inplace=True, drop=True)
+
+    rv.index = pd.to_datetime({'year'  : rv['year'],
+                               'month' : rv['month'],
+                               'day'   : rv['day']})
+    rv.index.name = 'date'
+
+    rv.drop(['year', 'month', 'day'], axis=1, inplace=True)
+
+    return rv
