@@ -6,6 +6,7 @@ from sklearn.metrics import r2_score
 
 import matplotlib.pyplot as plt
 
+
 class Return_periode_and_serie_analysis:
     def __init__(self, probability = '__exceedance__'):
         '''

@@ -8,6 +8,7 @@ from .model.hist_data import Historical_data, Fews_data
 from .model.sim_data import Historical_simulated_fixed_data, Forecast_data
 from .model.geojson_data import Extract_data_from_json
 from .model.profile_data import Exteact_river_profile
+from .model.flow_rating_curve import Extract_flow_rating_curve
 
 # Analysys data
 from .model.timeseries_analysis import Return_periode_and_serie_analysis
@@ -52,6 +53,16 @@ def decorator_print_demora(fun):
 # Functions to download data
 # --------------------------
 class data_download:
+
+    @staticmethod
+    @decorator_print_demora
+    def get_flow_rating_curve(*args, **kwards):
+        __time_test__ = 0
+        foo = Extract_flow_rating_curve(const.CONST)
+        rv = foo(*args, **kwards)
+        return rv, foo
+
+
     @staticmethod
     @decorator_print_demora
     def get_historical_data(*args, **kwards):

@@ -1,4 +1,4 @@
-import pyla
+import .pyAGIS as pyla
 import sys
 import numpy as np
 import pandas as pd
@@ -24,6 +24,7 @@ codigo_estacion = '47017170'
 
 '''
 
+"""
 # Extract data
 # ------------
 comid, _                     = pyla.data_download.get_comit_from_station(ID = codigo_estacion)
@@ -456,3 +457,5 @@ print(df_rp)
 print(R2(df_rp.groupby(df_rp.index.year).min().dropna(how='any')['sim'], df_rp.groupby(df_rp.index.year).min().dropna(how='any')['obs']))
 
 # 
+
+"""

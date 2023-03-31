@@ -214,3 +214,12 @@ Este script presenta el analisis de magnitudes planteados para la revision del c
 ![Ejemplo comparación visual](./docs/imgs/magnitud_example.png)
 
 Como metricas de desempeño se usaron el KGE y el coeficiente $r^2$ de Pearson.
+
+### Fecha: 02/02/2023
+#### Actualización:
+New! :
+- pyAGIS/__init__.py -> Se añade get_flow_rating_curve.
+- static/FlowRatingCurve -> Se añaden las curvas de gasto.
+- pyAGIS/model/flow_rating_curve.py -> Se añade la función de lectura de las curvas de calibración del caudal.
+- pyAGIS/const.py -> Se añade 'FOLDER FLOW RATING CURVE' al diccionario CONST.
+

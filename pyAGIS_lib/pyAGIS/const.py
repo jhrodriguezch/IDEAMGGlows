@@ -10,6 +10,7 @@ CONST = {'HYDROSHARE URL'              : r'https://www.hydroshare.org/resource/b
          'GEOJSON COLUMNS TO EXTRACT'  : ['new_COMID'],
 
          'PROFILE DATABASE'            : r'.\static\profiles_db.json',
+         'FOLDER FLOW RATING CURVE'    : r'.\static\FlowRatingCurve',
          
          'UTC' : 5,
          
